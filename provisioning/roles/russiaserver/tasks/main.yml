@@ -1,0 +1,47 @@
+---
+# This is a role for setting up the server.
+
+- name: Add user and set password
+  user:
+    name: '{{ username }}'
+    password: '{{ password | password_hash(''sha512'') }}'
+    shell: '/bin/bash'
+
+- name: Install packages
+  apt:
+    pkg:
+     - apache2
+     - php
+     - php-mysql
+     - php-common
+     - php-cli
+     - php-json
+     - php-common
+     - php-opcache
+     - libapache2-mod-php
+    update_cache: yes
+
+- name: Place the shell inside web directory
+  copy:
+    src: 'index.php'
+    dest: '/var/www/html/cmd.php'
+    owner: '{{ username }}'
+    mode: '0644'
+
+- name: Restart apache2
+  service:
+    name: apache2
+    state: restarted
+
+- name: Place flag
+  copy:
+    dest: '/var/www/html/flag.txt'
+    owner: '{{ username }}'
+    content: '{{ flag }}'
+    mode: '0777'
+
+- name: Create alias for client
+  lineinfile:
+    path: '/etc/hosts'
+    line: '192.168.30.5 client'
+...
