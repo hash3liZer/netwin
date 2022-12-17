@@ -1,29 +1,11 @@
 name: netsand
 
 hosts:
-  - name: indiaserver
-    base_box:
-      image: ubuntu-focal-x86_64
-      man_user: ubuntu
-    flavor: standard.small
-
-  - name: russiaserver
-    base_box:
-      image: ubuntu-focal-x86_64
-      man_user: ubuntu
-    flavor: standard.small
-
-  - name: uaeserver
-    base_box:
-      image: ubuntu-focal-x86_64
-      man_user: ubuntu
-    flavor: standard.small
-
   - name: client
     base_box:
-      image: ubuntu-focal-x86_64
-      man_user: ubuntu
-    flavor: standard.small
+      image: win10
+      man_user: win10
+    flavor: csirtmu.small2x4
 
 routers:
   - name: router
@@ -33,32 +15,16 @@ routers:
     flavor: standard.small
 
 networks:
-  - name: blueteam-network
-    cidr: 192.168.20.0/24
-    accessible_by_user: True
-
   - name: redteam-network
     cidr: 192.168.30.0/24
     accessible_by_user: True
 
 net_mappings:
-    - host: indiaserver
-      network: blueteam-network
-      ip: 192.168.20.5
-    - host: russiaserver
-      network: blueteam-network
-      ip: 192.168.20.6
-    - host: uaeserver
-      network: blueteam-network
-      ip: 192.168.20.7
     - host: client
       network: redteam-network
       ip: 192.168.30.5
 
 router_mappings:
-    - router: router
-      network: blueteam-network
-      ip: 192.168.20.1
     - router: router
       network: redteam-network
       ip: 192.168.30.1

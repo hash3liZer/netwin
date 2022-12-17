@@ -22,25 +22,4 @@
 #         loop_control:
 #             loop_var: user
 
-- name: Setting up connection
-  hosts:
-    - indiaserver
-    - russiaserver
-    - uaeserver
-    - client
-  become: yes
-  tasks:
-      - name: Test network connection using apt
-        apt:
-          update_cache: yes
-        register: apt_update
-        ignore_errors: yes
-
-      - name: Restart if broken network
-        reboot:
-        when: apt_update is failed
-
-      - include_role:
-            name: "{{ inventory_hostname }}"
-
 ...
