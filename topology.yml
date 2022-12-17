@@ -5,7 +5,7 @@ hosts:
     base_box:
       image: win10
       man_user: win10
-    flavor: csirtmu.small2x4
+    flavor: m1.medium
 
 routers:
   - name: router
